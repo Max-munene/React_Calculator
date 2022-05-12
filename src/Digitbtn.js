@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+// import React, { Component } from 'react';
 
 import { ACTIONS } from "./App";
 export default function DigitButton(digit) {
