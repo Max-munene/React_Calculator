@@ -27,6 +27,13 @@ function reducer(state, { type, payload }) {
       if (state.currentOperand == null && state.previousOperand == null){
         return state;
       }
+
+      if (state.currentOperand == null) {
+        return{
+          ...state,
+          operation: payload.operation,
+        }
+      }
       if (state.previousOperand == null){
         return {
           ...state,
@@ -43,6 +50,18 @@ function reducer(state, { type, payload }) {
       }
     case ACTIONS.CLEAR:
       return{}
+
+    case ACTIONS.EVALUATE:
+      if (state.operation == null || state.currentOperand == null || state.previousOperand == null){
+        return state
+      }
+      return {
+        ...state,
+        previousOperand: null,
+        operation: null,
+        currentOperand: evaluate(state)
+      }
+
   }
 }
 
@@ -51,6 +70,23 @@ function evaluate({
     const prev = parseFloat(previousOperand)
     const current = parseFloat(currentOperand)
     if (isNaN(prev) || isNaN(current)) return ""
+    let computation = ""
+    switch (operation){
+      case "+":
+        computation = prev + current
+        break
+      case "-":
+        computation = prev - current
+        break
+      case "*":
+        computation = prev * current
+      break
+      case "÷":
+        computation = prev / current
+        break
+      
+    }
+    return computation.toString()
   }
 function App() {
   const[{currentOperand, previousOperand, operation}, dispatch] = useReducer(reducer,{})
@@ -80,7 +116,7 @@ function App() {
       <OperationButton operation="-" dispatch={dispatch}/>
       <DigitButton digit="." dispatch={dispatch}/>
       <DigitButton digit="0" dispatch={dispatch}/>
-      <button className="span-two">=</button>
+      <button className="span-two" onClick={() => dispatch({type: ACTIONS.EVALUATE })}>=</button>
     </div>
   );
 }
