@@ -4,7 +4,7 @@
    
    body{
        margin: 0;
-       background: linear-gradient(to right, #00AAFF, #00FF6C)
+       background: linear-gradient(to right, #00AAFF, #c02db9)
    }
 
 
@@ -22,7 +22,7 @@
        font-size: 2rem;
        border: 1px solid white;
        outline: none;
-       background-color: rgba(255, 255,255, .75);
+       background-color: rgba(197, 218, 248, 0.75);
 
     }
 
